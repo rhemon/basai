@@ -71,7 +71,7 @@ class Signup extends Component {
         return (
             <div className="App-header sign-up-page">
                 <h3> B A S A I </h3>
-                <form id="home-form" className="form">
+                <form id="home-form">
                     <div className="form-group">
                         <label for="fname">First name:</label>
                         <input onChange={this.handleCredChange} type="text" id="fname" name="fname" className="form-control" />

@@ -52,7 +52,7 @@ class Login extends Component {
         return (
             <div className="App-header">
                 <h3> B A S A I </h3>
-                <form id="home-form" className="form">
+                <form id="home-form">
                     <div className="form-group">
                         <label for="email">Email:</label>
                         <input onChange={this.handleCredChange} type="email" id="email" name="email" className="form-control" />

@@ -59,7 +59,11 @@
   padding: 30px;
   border-radius: 5px;
 }
-
+@media(max-width:767px){
+  #home-form {
+    width: 90%;
+  }
+}
 .ca-text {
   margin-top: 2em;
   font-size: 0.6em;
