@@ -5,7 +5,7 @@ class PostedJobList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            "jobs": [{"id": 1, "title": "abdaer"},{"id": 1, "title": "abdaer"}]
+            "jobs": []
             
         };
         axios.get("/api/job/user/?token=" + localStorage.getItem("token")).then(res => {
