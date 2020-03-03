@@ -5,8 +5,6 @@ import App from './App';
 
 import { Provider } from 'react-globally'
 import * as serviceWorker from './serviceWorker';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import $ from 'jquery';
 
 const initialState = {
     token: '',

@@ -11,7 +11,10 @@ const instance = new SafelySetInnerHTML({
       'strong',
       'p',
       'br',
-      'img'
+      'img',
+      'ul',
+      'ol',
+      'li'
     ],
     ALLOWED_ATTRIBUTES: [
       'href',
