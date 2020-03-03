@@ -1,28 +1,32 @@
-from rest_framework import generics, permissions
-from rest_framework.response import Response
-from knox.models import AuthToken
-from .serializers import *
-from rest_framework.views import APIView
-from rest_framework.decorators import api_view
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
-from rest_framework.exceptions import APIException
 import json
-from .models import *
-from django.core.files import File
-from knox.settings import CONSTANTS
 import random
 import string
 
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from django.core.files import File
+from rest_framework import generics, permissions
+from rest_framework.decorators import api_view
+from rest_framework.exceptions import APIException
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from knox.models import AuthToken
+from knox.settings import CONSTANTS
+
+from .models import *
+
 @api_view(["POST"])
 def login(request):
+    """
+    Expects body of the request to contain
+    username and password.
+
+    If wrong credential, raises exception.
+    """
     data = json.loads(request.body.decode('utf-8'))
     print(data)
     user = authenticate(username=data["username"], password=data["password"])
-
     if user:
-        print("eehehehe")
-        
         token = AuthToken.objects.create(user)[1]
         print(token)
         return Response({
@@ -34,9 +38,12 @@ def login(request):
 
 @api_view(['GET'])
 def check_user(request):
-    # data = request.GET
-    print(request.body)
-    print(request.GET)
+    """
+    Expects request to have a param set in url
+    for the token.
+    Used to check if user authorized or not.
+    Returns "first_name", "last_name", "email" and "phone".
+    """
     token = request.GET.get('token')[:CONSTANTS.TOKEN_KEY_LENGTH]
     user = AuthToken.objects.get(token_key=token).user
     phone = ExtraUserDetail.objects.get(user=user).phone
@@ -49,6 +56,10 @@ def check_user(request):
 
 @api_view(['GET'])
 def logout(request):
+    """
+    Expects request param to have token.
+    Logs out user, removing the knox's auth token.
+    """
     token = request.GET.get('token')[:CONSTANTS.TOKEN_KEY_LENGTH]
     user = AuthToken.objects.get(token_key=token).delete()
     return Response({})
@@ -56,12 +67,18 @@ def logout(request):
 
 @api_view(['POST'])
 def signup(request):
-    print(request.body)
+    """
+    Create new user.
+    Expects request body to container:
+    username, first_name, last_name, email, phone, password
+    Returns a token, confirming users authorization
+    """
     data = json.loads(request.body.decode('utf-8'))
     user = User.objects.create_user(username=data['username'],
             email=data['email'],
             first_name=data['first_name'],
-            last_name=data['last_name'])
+            last_name=data['last_name'],
+            password=data['password'])
     extra_details = ExtraUserDetail.objects.create(user=user, phone=data['phone'])
     return Response({
         "token": AuthToken.objects.create(user)[1]
@@ -70,6 +87,11 @@ def signup(request):
 
 @api_view(['POST'])
 def user_update(request):
+    """
+    Expects user token, first_name
+    last_name, email and phone in body. Updates
+    the user details based on that.
+    """
     data = json.loads(request.body.decode('utf-8'))
     user = AuthToken.objects.get(token_key=data["token"][:CONSTANTS.TOKEN_KEY_LENGTH]).user
     extra = ExtraUserDetail.objects.get(user=user)
@@ -84,6 +106,11 @@ def user_update(request):
 
 @api_view(['GET', 'POST'])
 def job_details(request):
+    """
+    Use to get and post details for job
+    Fetches information of a job based on its id.
+    Also updates information from the body of request for given id.
+    """
     if request.method == "GET":
         job = Job.objects.get(id=request.GET.get("id"))
         token = request.GET.get("token")[:CONSTANTS.TOKEN_KEY_LENGTH]
@@ -117,6 +144,10 @@ def job_details(request):
 
 @api_view(['POST'])
 def new_job(request):
+    """
+    Create new job in database based on the data
+    provided in request's body.
+    """
     data = json.loads(request.body.decode('utf-8'))
     token = data["token"][:CONSTANTS.TOKEN_KEY_LENGTH]
     user = AuthToken.objects.get(token_key=token).user
@@ -127,6 +158,11 @@ def new_job(request):
 
 @api_view(['GET'])
 def all_jobs(request):
+    """
+    Return list of all jobs in id order,
+    so in order of added to database.
+    Latest will be first.
+    """
     jobs = Job.objects.all().order_by("-id")
     res = []
     for each in jobs:
@@ -140,6 +176,9 @@ def all_jobs(request):
 
 @api_view(['GET'])
 def jobs_by_user(request):
+    """
+    Find all jobs a user created.
+    """
     # data = json.loads(request.body.decode('utf-8'))
     token =request.GET.get("token")[:CONSTANTS.TOKEN_KEY_LENGTH]
     user = AuthToken.objects.get(token_key=token).user
@@ -156,6 +195,11 @@ def jobs_by_user(request):
 
 @api_view(['GET', 'POST'])
 def cv(request):
+    """
+    Getter and Setter for cv file.
+    Getter will return a url and file name.
+    Poster will update the cvfile.
+    """
     if request.method == "POST":
         cvFile = File(request.FILES['cvFile'])
         token = request.POST["token"][:CONSTANTS.TOKEN_KEY_LENGTH]
@@ -175,6 +219,9 @@ def cv(request):
 
 @api_view(['GET'])
 def apply_job(request):
+    """
+    Apply for a job, given id and token in request's GET dictionary.
+    """
     job = Job.objects.get(id=request.GET.get("id"))
     token = request.GET.get("token")[:CONSTANTS.TOKEN_KEY_LENGTH]
     user = AuthToken.objects.get(token_key=token).user
@@ -185,6 +232,10 @@ def apply_job(request):
 
 @api_view(['GET'])
 def job_applicants(request):
+    """
+    Get list of people who applied to the job with
+    given id.
+    """
     job = Job.objects.get(id=request.GET.get("id"))
     token = request.GET.get("token")[:CONSTANTS.TOKEN_KEY_LENGTH]
     user = AuthToken.objects.get(token_key=token).user
@@ -208,6 +259,11 @@ def job_applicants(request):
 
 @api_view(['POST'])
 def forgot_pass(request):
+    """
+    Given email, generate a random reset key
+    and save it in extra user detail.
+    Return it in response as "verify_code".
+    """
     data = json.loads(request.body.decode('utf-8'))
     user = User.objects.get(email=data['email'])
     extra = ExtraUserDetail.objects.get(user=user)
@@ -218,6 +274,12 @@ def forgot_pass(request):
 
 @api_view(['POST'])
 def verify_pass_code(request):
+    """
+    With given verify code and email from body,
+    check if it matches with preset code.
+    If so update user's password with the new one given
+    in request's body.
+    """
     data = json.loads(request.body.decode('utf-8'))
     user = User.objects.get(email=data['email'])
     extra = ExtraUserDetail.objects.get(user=user)

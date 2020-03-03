@@ -62,8 +62,10 @@ class Job extends Component {
                             <h3>{this.state.title}</h3>
                             <h5>@ {this.state.company }</h5>
                             <h6>Approximate Salary: {this.state.annual_salary }</h6>
-                            <div class="description">
+                            <div class="container">
+                                <div class="description">
                                 {instance.transform(this.state.description)}
+                                </div>
                             </div>
                             <br/>
                         </div>
