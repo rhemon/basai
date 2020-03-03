@@ -5,10 +5,10 @@ class Apply extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fname: 'Ridhwanul',
-            lname: 'Haque',
-            phone: '07731752014',
-            email: 'rhemon19@gmail.com',
+            fname: '',
+            lname: '',
+            phone: '',
+            email: '',
             cvname: 'No CV Uploaded Yet',
             cvUrl: '',
             disabled: '',
@@ -84,9 +84,9 @@ class Apply extends Component {
         return (
             <div>
                 <p>First name: {this.state.fname }</p>
-                <p>Last name: {this.state.fname }</p>
-                <p>Phone: {this.state.fname }</p>
-                <p>Email: {this.state.fname }</p>
+                <p>Last name: {this.state.lname }</p>
+                <p>Phone: {this.state.phone }</p>
+                <p>Email: {this.state.email }</p>
                 <p>Last CV: <a href={this.state.cvUrl}>{this.state.cvname }</a></p>
                 {/* include cv file here  */}
 

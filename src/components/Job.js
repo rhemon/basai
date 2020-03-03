@@ -10,10 +10,10 @@ class Job extends Component {
         let { id } = this.props.match.params;
         this.state = {
             id: id,
-            title: 'Full Stack Developer',
-            description: 'The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want. The job detail is gonna be here. You can write it as long as you want.',
-            annual_salary: '10000',
-            company: 'Neritic Ltd.',
+            title: '',
+            description: '',
+            annual_salary: '',
+            company: '',
             applied: false
         }
         axios.get("/api/job/details/?id="+id+"&token="+localStorage.getItem("token")).then(res => {
