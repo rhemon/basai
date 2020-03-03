@@ -65,6 +65,7 @@ class Job extends Component {
                             <div class="description">
                                 {instance.transform(this.state.description)}
                             </div>
+                            <br/>
                         </div>
                         <div class="col-md-4">
                             <h3>Apply to this job</h3>
