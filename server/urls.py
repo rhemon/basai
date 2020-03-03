@@ -15,5 +15,7 @@ urlpatterns = [
     path('api/job/user/', jobs_by_user),
     path('api/auth/cv/', cv),
     path('api/job/apply/', apply_job),
-    path('api/job/applicants/', job_applicants)
+    path('api/job/applicants/', job_applicants),
+    path('api/auth/forgot-pass/', forgot_pass),
+    path('api/auth/verify-code/', verify_pass_code),
 ]

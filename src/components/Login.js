@@ -62,7 +62,7 @@ class Login extends Component {
                         <input onChange={this.handleCredChange} type="password" id="password" name="password" className="form-control" />
                     </div>
                     <button onClick={this.onSubmit} className="primarybtn btn btn-primary form-control">Log In</button>
-                    <p className="ca-text">No Account ? <a href="/signup">Sign Up</a></p>
+                    <p className="ca-text">No Account ? <a href="/signup">Sign Up</a> <br/> <a href="/forgot-pass">Forgot Password ?</a></p>
                     <p>{ this.state.errormsg }</p>
                 </form>
             </div>

@@ -11,6 +11,8 @@ import json
 from .models import *
 from django.core.files import File
 from knox.settings import CONSTANTS
+import random
+import string
 
 @api_view(["POST"])
 def login(request):
@@ -203,3 +205,28 @@ def job_applicants(request):
             "company": job.company
         })
     raise APIException("Access denied")
+
+@api_view(['POST'])
+def forgot_pass(request):
+    data = json.loads(request.body.decode('utf-8'))
+    user = User.objects.get(email=data['email'])
+    extra = ExtraUserDetail.objects.get(user=user)
+    reset_code = ''.join(random.choice(string.ascii_uppercase) for i in range(4))
+    extra.reset_code = reset_code
+    extra.save()
+    return Response({"verify_code":reset_code})
+
+@api_view(['POST'])
+def verify_pass_code(request):
+    data = json.loads(request.body.decode('utf-8'))
+    user = User.objects.get(email=data['email'])
+    extra = ExtraUserDetail.objects.get(user=user)
+    if (extra.reset_code == data['verify_code']):
+        user.set_password(data['password'])
+        user.save()
+        extra.reset_code = ""
+        extra.save()
+        return Response({})
+    else:
+        raise APIException("Wrong Verify Code")
+

@@ -6,6 +6,7 @@ class ExtraUserDetail(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=100)
     cvfile = models.FileField(upload_to="media/")
+    reset_code = models.CharField(max_length=4, null=True, blank=True)
 
 class Job(models.Model):
     title = models.CharField(max_length=100)
