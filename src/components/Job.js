@@ -3,6 +3,22 @@ import Apply from "./Apply";
 import Nav from "./Nav";
 import axios from "axios"; 
 import { Redirect } from "react-router-dom";
+import SafelySetInnerHTML from 'safely-set-inner-html';
+
+const instance = new SafelySetInnerHTML({
+    ALLOWED_TAGS: [
+      'a',
+      'strong',
+      'p',
+      'br',
+      'img'
+    ],
+    ALLOWED_ATTRIBUTES: [
+      'href',
+      'class',
+      'src'
+    ]
+});
 
 class Job extends Component {
     constructor(props) {
@@ -43,7 +59,9 @@ class Job extends Component {
                             <h3>{this.state.title}</h3>
                             <h5>@ {this.state.company }</h5>
                             <h6>Approximate Salary: {this.state.annual_salary }</h6>
-                            <p class="description">{this.state.description}</p>
+                            <div class="description">
+                                {instance.transform(this.state.description)}
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <h3>Apply to this job</h3>
