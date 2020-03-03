@@ -1,4 +1,4 @@
-djagno
+django
 djangorestframework
 django-cors-headers
 django-rest-knox
