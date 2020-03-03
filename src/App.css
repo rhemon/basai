@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
 }
 
 .App-logo {
@@ -14,6 +13,7 @@
 }
 
 .App-header {
+  text-align: center;
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -24,8 +24,20 @@
   color: white;
 }
 
+.user-detail {
+  text-align: left;
+}
+
+.no-job-post {
+  text-align: center;
+}
+
+.edit-ud {
+  width: 100%;
+}
+
 .App-link {
-  color: #61dafb;
+  color: #899396;
 }
 
 @keyframes App-logo-spin {
@@ -35,4 +47,77 @@
   to {
     transform: rotate(360deg);
   }
+}
+.sign-up-page {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+#home-form {
+  width: 400px;
+  background-color: white;
+  color: black;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.ca-text {
+  margin-top: 2em;
+  font-size: 0.6em;
+}
+
+.job-item {
+  display: block;
+  background-color: turquoise;
+  color: #282c34;
+  padding: 30px;
+  border-radius: 5px;
+  width: 100% !important;
+  min-width: 100%;
+}
+.job-item:hover, .job-item:active {
+  text-decoration: none;
+  background-color: #282c34;
+  color: turquoise;
+}
+
+.description {
+  overflow: wrap;
+}
+
+.job-card {
+  padding: 20px;
+  border: 1px solid #282c34;
+  border-radius: 3px;
+  /* margin: 3px; */
+}
+
+.joblist {
+  border-bottom: 1px solid #282c34;
+  margin-bottom: 2px;
+  height: 100%;
+}
+
+.jobtitle {
+  margin-top: 10px;
+}
+/* .jobtitle {
+  padding-top: 20px;
+  font-size: 1em;
+} */
+
+.jobbuttons {
+  padding: 5px;
+}
+
+
+.primarybtn {
+  background-color: #282c34 !important;
+  color: white !important;
+  border: none !important;
+}
+
+.primarybtn:hover, .primarybtn:active {
+  background-color: turquoise !important;
+  color: #282c34 !important;
+  border: none !important;
 }

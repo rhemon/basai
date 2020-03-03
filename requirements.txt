@@ -1,0 +1,7 @@
+djagno
+djangorestframework
+django-cors-headers
+django-rest-knox
+*.pyc
+db.sqlite3
+__pycache__/*
