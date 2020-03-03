@@ -37,6 +37,10 @@ class UserDetails extends Component {
 
         this.saveChangedDetail = e => {
             e.preventDefault();
+            
+            if (this.state.disabled === " disabled"){
+                return;
+            }
             axios.post("/api/auth/update/", {
                 "email": this.state.email,
                 "phone": this.state.phone,

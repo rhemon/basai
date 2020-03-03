@@ -57,6 +57,9 @@ class Apply extends Component {
 
         this.applyForJob = e => {
             e.preventDefault();
+            if (this.state.disabled === " disabled"){
+                return;
+            }
             if (this.state.cvchange) {
                 let fD = new FormData();
                 fD.append("cvFile", this.state.cvFile);
